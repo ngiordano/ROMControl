@@ -31,13 +31,6 @@
 		android:summary="@string/header_summary_power_menu" />
 
 	<header
-		android:id="@+id/led"
-		android:fragment="com.aokp.romcontrol.fragments.Led"
-		android:title="@string/led_options"
-		android:icon="@drawable/ic_rom_control_led"
-		android:summary="@string/header_summary_led" />
-
-	<header
 		android:id="@+id/weather"
 		android:fragment="com.aokp.romcontrol.fragments.Weather"
 		android:title="@string/weather"
@@ -54,6 +47,14 @@
 		android:title="@string/power_saver"
 		android:icon="@drawable/ic_rom_control_powersaver"
 		android:summary="@string/header_summary_powersaver" />
+
+
+	<header
+		android:id="@+id/led"
+		android:fragment="com.aokp.romcontrol.fragments.Led"
+		android:title="@string/led_options"
+		android:icon="@drawable/ic_rom_control_led"
+		android:summary="@string/header_summary_led" />
 
 	<header android:title="@string/statusbar" />
 
@@ -92,11 +93,20 @@
 		android:icon="@drawable/ic_rom_control_signal"
 		android:summary="@string/header_summary_signal" />
 
+	<header android:title="@string/tools" />
+
 	<header
-        	android:id="@+id/init_d"
-        	android:title="@string/pt_init_d"
-        	android:summary="@string/ps_init_d"
-        	android:fragment="com.aokp.romcontrol.fragments.InitD"
-        	android:icon="@drawable/ic_rom_control_init_d"/>
+		android:id="@+id/performance"
+		android:title="@string/pt_performance"
+		android:summary="@string/ps_performance"
+		android:fragment="com.aokp.romcontrol.fragments.Performance"
+		android:icon="@drawable/ic_rom_control_performance" />
+
+    <header
+        android:id="@+id/init_d"
+        android:title="@string/pt_init_d"
+        android:summary="@string/ps_init_d"
+        android:fragment="com.aokp.romcontrol.fragments.InitD"
+        android:icon="@drawable/ic_rom_control_init_d"/>
 
 </preference-headers>

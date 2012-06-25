@@ -167,10 +167,14 @@
 
 	<string-array name="pref_lockscreen_options_entries">
 		<item>Výchozí</item>
-		<item>Quad</item>
-		<item>Octo</item>
 		<item>AOSP</item>
     <item>Honeycomb</item>
+    <item>3 položky</item>
+		<item>4 položky</item>
+		<item>5 položek</item>
+		<item>6 položek</item>
+		<item>7 položek</item>
+		<item>8 položek</item>
 	</string-array>
   
   <string-array name="pref_lockscreen_calendar_interval_entries">
@@ -237,13 +241,6 @@
 		<item>SMS</item>
 		<item>Vlastní aplikace</item>
 		<item>Prázdné</item>
-	</string-array>
-	
-	<string-array name="glow_times_entries">
-		<item>Vypnut</item>
-		<item>Hodně rychlý</item>
-		<item>Rychlý</item>
-		<item>Normální</item>
 	</string-array>
 
 	<string-array name="lcd_density_entries">
@@ -323,7 +320,8 @@
 		<item>Přepínač aplikací</item>
 		<item>Hledat</item>
 		<item>Menu</item>
-		<item>Kilnout aplikaci</item>
+    <item>Přepnout widgety</item>
+		<item>Ukončit aplikaci</item>
 		<item>Napájení</item>
 		<item>Vlastní aplikace</item>
 		<item>Prázdné</item>
@@ -334,4 +332,16 @@
     <item>WebOS</item>
     <item>Sense 4</item>
   </string-array>
+  
+  <string-array name="less_notification_sounds_entries">
+	  <item>Výchozí chování</item>
+	  <item>3s</item>
+	  <item>5s</item>
+	  <item>10s</item>
+	  <item>15s</item>
+	  <item>30s</item>
+	  <item>45s</item>
+	  <item>1m</item>
+	  <item>2m</item>
+	</string-array>
 </resources>

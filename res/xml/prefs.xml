@@ -71,6 +71,7 @@
 				android:targetPackage="com.aokp.romcontrol" />
 		</Preference>
 
+
 	</PreferenceCategory>
 
 	<PreferenceCategory
@@ -117,6 +118,20 @@
 				android:targetPackage="com.aokp.romcontrol" />
 		</Preference>
 
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:key="tools"
+		android:title="@string/tools">
+		<Preference
+			android:key="performance"
+			android:title="@string/pt_performance"
+			android:summary="@string/ps_performance">
+			<intent
+				android:action="android.intent.action.MAIN"
+				android:targetPackage="com.aokp.romcontrol"
+				android:targetClass="com.aokp.romcontrol.tools.Performance" />
+		</Preference>
 		<Preference
 			android:key="init_d"
 			android:title="@string/pt_init_d"

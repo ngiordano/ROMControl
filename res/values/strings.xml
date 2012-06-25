@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AOKP Settings</string>
+    <string name="app_name">ROM Control</string>
 
     <!-- Main -->
     <string name="user_interface">User Interface</string>
@@ -36,6 +36,12 @@
     <string name="advanced_settings">Advanced settings</string>
     <string name="misc_short">Misc</string>
 
+    <!-- Menu Strings -->
+    <string name="menu_lockscreens_remove_wallpaper">Reset lockscreen wallpaper</string>
+    <string name="menu_main_activity_change_locale">Locale</string>
+    <string name="menu_nav_bar_reset">Reset nav bar</string>
+    <string name="menu_weather_get_weather">Get weather</string>
+
     <!-- General Strings -->
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
@@ -49,6 +55,10 @@
     <string name="navigation_bar_glow_tint_summary">When you press on a button, there is a glow. Use this to change the color of the glow.</string>
     <string name="navigation_bar_height_title">Navigation bar height</string>
     <string name="navigation_bar_width_title">Navigation bar width</string>
+
+    <string name="navigation_bar_add_new_widget_title">Add new widget</string>
+    <string name="navigation_bar_add_new_widget_summary">Press to add another widget</string>
+    <string name="navigation_bar_widget">"Widget "</string>
 
     <string name="title_pref_navigation_menu_display">Menu visibility</string>
     <string name="summary_pref_navigation_menu_display">How and when do you want the menu buttons to appear?</string>
@@ -76,20 +86,37 @@
     <string name="navbar_action_power">Power</string>
     <string name="navbar_action_none">Empty</string>
 
+	<string name="navbar_enable_bar">Enable bar</string>
+
+	<string name="navbar_widgets">Navigation Bar Widgets</string>
+	<string name="navbar_widgets_reset">Reset navbar widgets</string>
+
+    <string name="navbar_enable_dialog_title">Reboot required!</string>
+    <string name="navbar_enable_dialog_msg">Please reboot to enable/disable the navigation bar properly!</string>
+    <string name="navbar_enable_dialog_negative">I\'ll reboot later</string>
+    <string name="navbar_enable_dialog_Positive">Reboot now!</string>
+
     <string name="button_transparency_title">Nav button transparency</string>
 
     <string name="long_press_home_title">Long press home action</string>
     <string name="long_press_home_summary">What to do when long pressing the home softkey. Reboot required to reflect changes.</string>
 
     <string name="glow_times_title">Button glow animation</string>
-    <string name="glow_times_summary">Adjust how fast your buttons animate after you touch them. Lowering the speed can improve performance.</string>
+    <string name="glow_times_off">Off</string>
+    <string name="glow_times_superquick">Super quick</string>
+    <string name="glow_times_quick">Quick</string>
+    <string name="glow_times_normal">Normal</string>
+
+    <string name="combined_bar_title">Combined Bar</string>
+    <string name="combined_bar_auto_hide_title">Auto Hide</string>
+    <string name="combined_bar_auto_hide_summary">Allow Combined Bar to hide when showing a fullscreen app</string>
 
     <!-- UI -->
     <string name="rotation_animation_delay_title">Rotation delay</string>
     <string name="rotation_animation_delay_summary">The number of milliseconds for which the device posture must be stable before an orientation change occurs. 200 ms default.</string>
 
 	<string name="ime_switcher_title">Show IME Switcher</string>
-	<string name="ime_switcher_summary">In statusbar, while typing (requires reboot)</string>
+	<string name="ime_switcher_summary">In statusbar, while typing</string>
 
 	<string name="custom_carrier_label_title">Custom carrier label</string>
 	<string name="custom_carrier_label_empty">Please enter a new one!</string>
@@ -98,6 +125,9 @@
 	<string name="longpress_to_kill_summary">Holding back will kill the current activity</string>
 
     <string name="enable_volume_options">Enable Volume Options</string>
+
+    <string name="less_notification_sounds_title">Less Frequent Notification Sounds</string>
+    <string name="less_notification_sounds_summary">Limit each app\'s notification sounds to play once per the set value</string>
 
 	<string name="rotate_180_title">Allow 180° rotation</string>
 	<string name="rotate_180_summary">Allow your device to rotate upside down!</string>
@@ -123,20 +153,32 @@
 	<string name="crt_off_title">CRT off animation</string>
 
 	<!-- LCD Density -->
+	<string name="current_lcd_density">"Current LCD Density: "</string>
 	<string name="lcd_density_wizard">LCD Density Wizard</string>
 	<string name="follow_through_title">Follow through!</string>
 	<string name="follow_through_summary">Make sure you follow the steps one-by-one and complete each one before proceeding to the next.</string>
-	<string name="stock_density_title">1. Desired LCD Density</string>
+	<string name="stock_density_title">1. Change LCD Density to stock value</string>
 	<string name="stock_density_summary">Tablets and older phones use 160. Most phones use 240. Galaxy Nexus uses 320 by default.</string>
+	<string name="stock_density_changed_summary">"Density set to: "</string>
 	<string name="reboot_title">2. Reboot!</string>
 	<string name="reboot_summary">Come back here after the reboot and complete the rest of the steps!</string>
 	<string name="clear_market_data_title">3. Clear market data</string>
-	<string name="clear_market_data_summary">Incompatibilities may show outside of the default 160, 240, 320 values</string>
 	<string name="clear_market_data_cleared">Market data cleared</string>
+	<string name="clear_market_data_donot_cleared">"Market data couldn't be cleared, please clear it yourself!"</string>
 	<string name="open_market_title">4. Open Market and hit accept</string>
 	<string name="open_market_summary">Press back when done to return here.</string>
-	<string name="custom_density_title">5. Change density to stock</string>
+	<string name="open_market_summary_could_not_open">"Couldn't open the market! If you're sure it's installed, open it yourself from the launcher."</string>
+	<string name="custom_density_title">5. Change density to whatever you like!</string>
 	<string name="custom_density_summary">If you ever have compatibility issues with the market, be sure to return here and repeat the process.</string>
+	<string name="custom_density_summary_invalid">"INVALID DENSITY!"</string>
+	<string name="custom_density">custom</string>
+	<string name="set_custom_density_title">Set custom density</string>
+	<string name="set_custom_density_set">Set</string>
+	<string name="custom_density_dialog_title">"WARNING!"</string>
+	<string name="custom_density_dialog_summary">"Changing your LCD density can cause unexpected app behavior. If you encounter market app incompatibility please return here and restart the process from step 1."</string>
+	<string name="custom_density_dialog_button_got">Got it!</string>
+	<string name="custom_density_dialog_button_reboot">Reboot now</string>
+
 
     <!-- Lockscreens -->
     <string name="pref_lockscreen_layout_title">Lockscreen style</string>
@@ -158,10 +200,14 @@
     <string name="lockscreen_battery_summary">Always show battery percentage on the lockscreen</string>
 	<string name="lockscreen_weather_title">Lockscreen Weather</string>
     <string name="lockscreen_weather_summary">Show Weather Information on Lockscreen. You need to enable ROMControl\'s Weather service to use this</string>
+    <string name="lockscreen_weather_type_title">Lockscreen Weather style</string>
+    <string name="lockscreen_weather_type_summary">Whether to show graphical or text weather information.</string>
     <string name="volume_wake_title">Volume wake</string>
     <string name="volume_wake_summary">Tapping the volume keys while your phone is off will turn the screen on.</string>
     <string name="volume_music_controls_title">Volume music controls</string>
     <string name="volume_music_controls_summary">Long press volume buttons to skip tracks while screen is off. Volume wake will not work when music is playing.</string>
+    <string name="lockscreen_stock_music_layout_title">Stock music layout</string>
+    <string name="lockscreen_stock_music_layout_summary">Use the stock layout when playing music.</string>
     <string name="lockscreen_show_nav_title">Hide nav bar</string>
     <string name="lockscreen_show_nav_summary">Hide the nav bar (if your device supports it) on the lockscreen.</string>
     <string name="custom_app_n_dialog_title">Choose action for target %1$s</string>
@@ -173,6 +219,9 @@
     <string name="lockscreen_action_mms">SMS</string>
     <string name="lockscreen_action_phone">Phone</string>
     <string name="lockscreen_action_none">Empty</string>
+    <string name="lockscreen_custom_app_icon_no_sd">Insert SD card to use this feature</string>
+    <string name="lockscreen_custom_app_icon_successfully">"'s icon set successfully!"</string>
+    <string name="lockscreen_custom_app_icon_failed">"Setting icon failed! Is your SD mounted?"</string>
     <string name="lockscreen_landscape_title">Horizontal lockscreen</string>
     <string name="lockscreen_landscape_summary">Whether horizontal lockscreen orientation will be enabled</string>
     <string name="lockscreen_quick_unlock_control_title">Quick pin unlock</string>
@@ -181,12 +230,18 @@
     <string name="enable_fast_torch_summary">While your screen is off, you can long-press the power key to turn the LED light on. Letting go of the power button will turn the torch off.</string>
     <string name="lockscreen_wallpaper_title">Choose lockscreen wallpaper</string>
     <string name="lockscreen_wallpaper_summary">You can remove the wallpaper from the menu in this window</string>
+    <string name="lockscreen_wallpaper_no_external_storage">No external storage available (/sdcard) to use this feature. Please insert it or fix your ROM!</string>
+    <string name="lockscreen_wallpaper_not_set_sd">"Wallpaper did not set (is your SD mounted?)"</string>
+    <string name="lockscreen_wallpaper_set_successfully">"Wallpaper set successfully"</string>
+    <string name="lockscreen_wallpaper_not_set">"Wallpaper did not set (!!!)"</string>
     <string name="lockscreen_text_color_title">Lockscreen text color</string>
     <string name="lockscreen_calendar">Lockscreen calendar</string>
     <string name="lockscreen_calendar_title">Enable</string>
     <string name="lockscreen_calendar_summary">Show upcoming event(s) from your calendar on the lockscreen.</string>
     <string name="lockscreen_calendar_sources_title">Calendar sources</string>
     <string name="lockscreen_calendar_sources_summary">Select the calendars you want to see.</string>
+    <string name="lockscreen_calendar_dialog">Choose which calendars to use</string>
+    <string name="lockscreen_calendar_close">Close</string>
     <string name="lockscreen_calendar_range_title">Time-range</string>
     <string name="lockscreen_calendar_range_summary">Select the time-range to be displayed.</string>
     <string name="lockscreen_calendar_use_colors_title">Use colors</string>
@@ -205,6 +260,9 @@
     <string name="title_show_torch_toggle">Show torch toggle</string>
     <string name="title_show_airplane_toggle">Show airplane toggle</string>
     <string name="title_show_navbar_hide">Show navigation bar toggle</string>
+
+    <!-- Share to Clipboard -->
+    <string name="clipboard_notification">Copied to clipboard.</string>
 
     <!-- Power Saving -->
     <string name="title_pref_powersaving_pref_mode">Enable power saver</string>
@@ -262,6 +320,9 @@
     <string name="statusbar_fontsize">Statusbar Font Size</string>
     <string name="statusbar_fontsize_summary">Change the size of text elements on statusbar</string>
 
+    <string name="status_bar_notif_count_title">Show notification count</string>
+    <string name="status_bar_notif_count_summary">Display number of pending notifications on the status bar</string>
+
     <!-- Statusbar | Battery -->
     <string name="battery_icon">Battery icon style</string>
     <string name="battery_summary_text_widget">@null</string>
@@ -289,8 +350,7 @@
     <string name="toggle_style_title">Toggle style</string>
     <string name="toggle_style_summary">Whether to show icons or text on your toggles.</string>
 
-    <string name="alternate_button_layout_title">Alternate toggles</string>
-    <string name="alternate_button_layout_summary">Use Toggle Buttons instead of switches for your toggles.</string>
+    <string name="toggles_layout_title">Toggle Layout</string>
 
     <string name="enabled_toggles_title">Enabled toggles</string>
     <string name="enabled_toggles_summary">Choose toggles to display</string>
@@ -339,6 +399,7 @@
 	<string name="weather_show_location_title">Show location</string>
 	<string name="weather_show_location_summary">Show your location.</string>
 	<string name="weather_refresh_interval">Refresh interval</string>
+	<string name="weather_refresh_interval_minutes">" minutes"</string>
 	<string name="weather_use_celcius">Metric units</string>
 	<string name="weather_use_celcius_summary">Enabling this will display weather temperature in Celsius rather than Fahrenheit and windspeed in km/h rather than mph.</string>
 	<string name="weather_statusbar_style">Statusbar weather style</string>
@@ -348,6 +409,10 @@
     <string name="weather_custom_app_dialog_title">Choose your app</string>
 	<string name="weather_custom_app_dialog_message">Package name for now.</string>
 	<string name="weather_refreshing">Requesting weather update!</string>
+    <string name="weather_loc_warning_title">Cannot retrieve location!</string>
+    <string name="weather_loc_warning_msg">"Obtaining location from network is currently disabled. This breaks the ability to get the current weather in your current location. Please set a custom location or enable obtaining your location from your network."</string>
+    <string name="weather_loc_warning_positive">"Enable network location"</string>
+    <string name="weather_loc_warning_negative">"Don't enable."</string>
 
 	<!-- Dialog Titles -->
 	<string name="dt_free_memory">Minfree Taskkiller</string>
@@ -496,6 +561,7 @@
     <string name="color_red_title">Red</string>
     <string name="color_green_title">Green</string>
     <string name="color_blue_title">Blue</string>
+    <string name="gamma_dss_title">Software Gamma Adjustment</string>
     <string name="reset_defaults">Reset to Defaults</string>
 
     <!-- Weather Codes -->
@@ -556,5 +622,9 @@
     <string name="weather_47">Isolated Thundershowers</string>
     <!-- Forecase unavailable -->
     <string name="weather_3200"></string>
+
+    <!-- Miscellaneous -->
+    <string name="location_unavailable">Unable to retrieve location information for weather update</string>
+
 
 </resources>

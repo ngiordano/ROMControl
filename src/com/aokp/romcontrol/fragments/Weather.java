@@ -60,14 +60,14 @@ public class Weather extends AOKPPreferenceFragment implements
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefs_weather);
 
-        prefs = getActivity().getSharedPreferences("weather", Context.MODE_PRIVATE);
+        prefs = getActivity().getSharedPreferences("weather", Context.MODE_WORLD_WRITEABLE);
 
         mPicker = new ShortcutPickerHelper(this, this);
 
         mWeatherSyncInterval = (ListPreference) findPreference("refresh_interval");
         mWeatherSyncInterval.setOnPreferenceChangeListener(this);
         mWeatherSyncInterval.setSummary(Integer.toString(WeatherPrefs.getRefreshInterval(mContext))
-                + " minutes");
+                + getResources().getString(R.string.weather_refresh_interval_minutes));
 
         mStatusBarLocation = (ListPreference) findPreference("statusbar_location");
         mStatusBarLocation.setOnPreferenceChangeListener(this);
@@ -117,11 +117,10 @@ public class Weather extends AOKPPreferenceFragment implements
         switch (dialogId) {
             case LOC_WARNING:
                 return new AlertDialog.Builder(getActivity())
-                        .setTitle("Cannot retrieve location!")
-                        .setMessage(
-                                "Obtaining location from network is currently disabled. This breaks the ability to get the current weather in your current location. Please set a custom location or enable obtaining your location from your network.")
+                        .setTitle(getResources().getString(R.string.weather_loc_warning_title))
+                        .setMessage(getResources().getString(R.string.weather_loc_warning_msg))
                         .setCancelable(false)
-                        .setPositiveButton("Enable network location",
+                        .setPositiveButton(getResources().getString(R.string.weather_loc_warning_positive),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
                                         Settings.Secure.setLocationProviderEnabled(
@@ -129,7 +128,7 @@ public class Weather extends AOKPPreferenceFragment implements
                                                 LocationManager.NETWORK_PROVIDER, true);
                                     }
                                 })
-                        .setNegativeButton("Don't enable.", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getResources().getString(R.string.weather_loc_warning_negative), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.dismiss();
                             }
@@ -151,10 +150,9 @@ public class Weather extends AOKPPreferenceFragment implements
             case R.id.get_weather:
                 Intent i = new Intent(getActivity().getApplicationContext(),
                         WeatherRefreshService.class);
-                i.setAction(WeatherService.INTENT_REQUEST_WEATHER);
+                i.setAction(WeatherService.INTENT_WEATHER_REQUEST);
+                i.putExtra(WeatherService.INTENT_EXTRA_ISMANUAL, true);
                 getActivity().getApplicationContext().startService(i);
-                Helpers.msgShort(getActivity().getApplicationContext(),
-                        getString(R.string.weather_refreshing));
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -168,7 +166,8 @@ public class Weather extends AOKPPreferenceFragment implements
             boolean check = ((CheckBoxPreference) preference).isChecked();
             Intent i = new Intent(getActivity().getApplicationContext(),
                     WeatherRefreshService.class);
-            i.setAction(WeatherService.INTENT_REQUEST_WEATHER);
+            i.setAction(WeatherService.INTENT_WEATHER_REQUEST);
+            i.putExtra(WeatherService.INTENT_EXTRA_ISMANUAL, true);
             PendingIntent weatherRefreshIntent = PendingIntent.getService(getActivity(), 0, i, 0);
             if (!check) {
                 AlarmManager alarms = (AlarmManager) getActivity().getSystemService(
@@ -207,7 +206,7 @@ public class Weather extends AOKPPreferenceFragment implements
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mWeatherSyncInterval) {
             int newVal = Integer.parseInt((String) newValue);
-            preference.setSummary(newValue + " minutes");
+            preference.setSummary(newValue + getResources().getString(R.string.weather_refresh_interval_minutes));
 
             return WeatherPrefs.setRefreshInterval(mContext, newVal);
 

@@ -1,6 +1,16 @@
 
 package com.aokp.romcontrol.fragments;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -40,20 +50,9 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Toast;
 
 import com.aokp.romcontrol.AOKPPreferenceFragment;
+import com.aokp.romcontrol.R;
 import com.aokp.romcontrol.util.ShortcutPickerHelper;
 import com.aokp.romcontrol.widgets.LockscreenItemPreference;
-import com.aokp.romcontrol.R;
-
-import net.margaritov.preference.colorpicker.ColorPickerPreference;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 public class Lockscreens extends AOKPPreferenceFragment implements
         ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
@@ -67,9 +66,12 @@ public class Lockscreens extends AOKPPreferenceFragment implements
 
     private static final String PREF_VOLUME_WAKE = "volume_wake";
     private static final String PREF_VOLUME_MUSIC = "volume_music_controls";
+    
+    private static final String PREF_STOCK_MUSIC_LAYOUT = "lockscreen_stock_music_layout";
 
     private static final String PREF_LOCKSCREEN_BATTERY = "lockscreen_battery";
     private static final String PREF_LOCKSCREEN_WEATHER = "lockscreen_weather";
+    private static final String PREF_LOCKSCREEN_WEATHER_TYPE = "lockscreen_weather_type";
     private static final String PREF_LOCKSCREEN_TEXT_COLOR = "lockscreen_text_color";
 
     private static final String PREF_LOCKSCREEN_CALENDAR = "enable_calendar";
@@ -97,6 +99,7 @@ public class Lockscreens extends AOKPPreferenceFragment implements
     CheckBoxPreference mLockscreenLandscape;
     CheckBoxPreference mLockscreenBattery;
     CheckBoxPreference mLockscreenWeather;
+    ListPreference mLockscreenWeatherType;
     CheckBoxPreference mShowLockBeforeUnlock;
     ColorPickerPreference mLockscreenTextColor;
     CheckBoxPreference mLockscreenCalendar;
@@ -106,6 +109,7 @@ public class Lockscreens extends AOKPPreferenceFragment implements
     ListPreference mCalendarRange;
     CheckBoxPreference mLockscreenCalendarHideOngoing;
     CheckBoxPreference mLockscreenCalendarUseColors;
+    CheckBoxPreference mStockMusicLayout;
 
     Preference mLockscreenWallpaper;
 
@@ -150,6 +154,11 @@ public class Lockscreens extends AOKPPreferenceFragment implements
         mLockscreenWeather.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.LOCKSCREEN_WEATHER, 0) == 1);
 
+        mLockscreenWeatherType = (ListPreference) findPreference(PREF_LOCKSCREEN_WEATHER_TYPE);
+        mLockscreenWeatherType.setOnPreferenceChangeListener(this);
+        mLockscreenWeatherType.setValue(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.LOCKSCREEN_WEATHER_TYPE, 0) + "");
+
         mShowLockBeforeUnlock = (CheckBoxPreference) findPreference(PREF_SHOW_LOCK_BEFORE_UNLOCK);
         mShowLockBeforeUnlock.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.SHOW_LOCK_BEFORE_UNLOCK, 0) == 1);
@@ -161,6 +170,10 @@ public class Lockscreens extends AOKPPreferenceFragment implements
         mVolumeMusic = (CheckBoxPreference) findPreference(PREF_VOLUME_MUSIC);
         mVolumeMusic.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                 Settings.System.VOLUME_MUSIC_CONTROLS, 0) == 1);
+
+        mStockMusicLayout = (CheckBoxPreference) findPreference(PREF_STOCK_MUSIC_LAYOUT);
+        mStockMusicLayout.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.LOCKSCREEN_STOCK_MUSIC_LAYOUT, 0) == 1);
 
         mLockscreenWallpaper = findPreference("wallpaper");
 
@@ -226,7 +239,7 @@ public class Lockscreens extends AOKPPreferenceFragment implements
         if (!isSDPresent) {
             mLockscreenWallpaper.setEnabled(false);
             mLockscreenWallpaper
-                    .setSummary("No external storage available (/sdcard) to use this feature. Please insert it or fix your ROM!");
+                    .setSummary(getResources().getString(R.string.lockscreen_wallpaper_no_external_storage));
 
         }
         refreshSettings();
@@ -273,6 +286,13 @@ public class Lockscreens extends AOKPPreferenceFragment implements
                     Settings.System.VOLUME_WAKE_SCREEN,
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
+        } else if (preference == mStockMusicLayout) {
+
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.LOCKSCREEN_STOCK_MUSIC_LAYOUT,
+                    ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
+            return true;
+
         } else if (preference == mVolumeMusic) {
 
             Settings.System.putInt(getActivity().getContentResolver(),
@@ -350,9 +370,9 @@ public class Lockscreens extends AOKPPreferenceFragment implements
                 }
             }
 
-            builder.setTitle("Choose which calendars to use");
+            builder.setTitle(getResources().getString(R.string.lockscreen_calendar_dialog));
             builder.setCancelable(false);
-            builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(getResources().getString(R.string.lockscreen_calendar_close), new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -441,17 +461,6 @@ public class Lockscreens extends AOKPPreferenceFragment implements
         PreferenceGroup targetGroup = (PreferenceGroup) findPreference("lockscreen_targets");
         targetGroup.removeAll();
 
-        // quad only uses first 4, but we make the system think there's 6 for
-        // the alternate layout
-        // so only show 4
-        if (lockscreenTargets == 6) {
-            Settings.System.putString(getContentResolver(),
-                    Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[4], "**null**");
-            Settings.System.putString(getContentResolver(),
-                    Settings.System.LOCKSCREEN_CUSTOM_APP_ACTIVITIES[5], "**null**");
-            lockscreenTargets = 4;
-        }
-
         PackageManager pm = mContext.getPackageManager();
         Resources res = mContext.getResources();
 
@@ -477,7 +486,7 @@ public class Lockscreens extends AOKPPreferenceFragment implements
                     Boolean isSDPresent = android.os.Environment.getExternalStorageState().equals(
                             android.os.Environment.MEDIA_MOUNTED);
                     if (!isSDPresent) {
-                        Toast.makeText(v.getContext(), "Insert SD card to use this feature",
+                        Toast.makeText(v.getContext(), getResources().getString(R.string.lockscreen_custom_app_icon_no_sd),
                                 Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -682,6 +691,12 @@ public class Lockscreens extends AOKPPreferenceFragment implements
                 refreshSettings();
             }
             return true;
+        } else if (preference == mLockscreenWeatherType) {
+            int val = Integer.parseInt((String) newValue);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.LOCKSCREEN_WEATHER_TYPE, val);
+            return true;
+
         }
 
         return false;
@@ -704,13 +719,13 @@ public class Lockscreens extends AOKPPreferenceFragment implements
                 Bitmap bitmap = BitmapFactory.decodeFile(galleryImage.getAbsolutePath());
 
                 if (bitmap == null) {
-                    message = "Wallpaper did not set (is your SD mounted?)";
+                    message = getResources().getString(R.string.lockscreen_wallpaper_not_set_sd);
                 } else if (bitmap != null
                         && bitmap.compress(Bitmap.CompressFormat.JPEG, 100, wallpaperStream)) {
-                    message = "Wallpaper set successfully";
+                    message = getResources().getString(R.string.lockscreen_wallpaper_set_successfully);
                 } else {
                     // shouldn't get here, but let's leave it just in case
-                    message = "Wallpaepr did not set (!!!)";
+                    message = getResources().getString(R.string.lockscreen_wallpaper_not_set);
                 }
                 Toast.makeText(getActivity(), message,
                         Toast.LENGTH_SHORT).show();
@@ -746,11 +761,11 @@ public class Lockscreens extends AOKPPreferenceFragment implements
                     if (galleryImage.exists())
                         galleryImage.delete();
 
-                    Toast.makeText(getActivity(), currentIconIndex + "'s icon set successfully!",
+                    Toast.makeText(getActivity(), currentIconIndex + getResources().getString(R.string.lockscreen_custom_app_icon_successfully),
                             Toast.LENGTH_SHORT).show();
                     refreshSettings();
                 } else {
-                    Toast.makeText(getActivity(), "Setting icon failed! Is your SD mounted?",
+                    Toast.makeText(getActivity(), getResources().getString(R.string.lockscreen_custom_app_icon_failed),
                             Toast.LENGTH_SHORT).show();
                 }
 
